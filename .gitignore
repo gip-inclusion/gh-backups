@@ -1,0 +1,6 @@
+.env
+.vscode/
+.cursor/
+.ruby-lsp/
+.byebug_history
+.DS_Store
