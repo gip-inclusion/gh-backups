@@ -1,17 +1,17 @@
 # GitHub Backup
 
-Ce projet contient un script en Ruby pour sauvegarder l'historique Git et les métadonnées de tous les dépôts d'une organisation GitHub vers un bucket S3.
+Ce projet contient un script en ruby pour sauvegarder l'historique git et les métadonnées de tous les dépôts d'une organisation GitHub vers un bucket S3.
 
 ## 📋 Description
 
 Ce projet permet de sauvegarder automatiquement :
 
-- **L'historique Git complet** de chaque dépôt (clone mirror compressé en tar.gz)
+- **L'historique git complet** de chaque dépôt (clone mirror compressé en tar.gz)
 - **Les métadonnées GitHub** : issues, pull requests, commentaires d'issues et commentaires de pull requests
 
 Le script parcourt tous les dépôts **non archivés** et **non forkés** de l'organisation spécifiée et sauvegarde leurs données dans un bucket S3 Scaleway.
 
-⚠️ Attention : pour exécuter le script via la CI, il faut que les repos en question soit public, autrement l'historique git ne pourra pas être récupéré via la CI.
+⚠️ Attention : pour exécuter le script via la CI, il faut que les repos en question soient public, autrement l'historique git ne pourra pas être récupéré via la CI.
 
 ## 🔧 Configuration
 
@@ -43,12 +43,11 @@ Les permissions dépendent du type de dépôts à sauvegarder :
 - Un token personnel avec accès en lecture suffit
 
 #### Pour sauvegarder les dépôts privés :
-- `read:org` : Lecture des informations et dépôts de l'organisation
-- `repo` : Accès complet aux dépôts privés et publics
+- Accès à la lecture des issues et pull requests des dépôts à sauvegarder.
 
 #### ⚠️ Limitations importantes
 
-Le script détecte automatiquement l'environnement CI et **ignore la sauvegarde Git des dépôts privés** parce que l'authentification pour récupérer l'historique git n'est pas gérée.
+Le script détecte automatiquement l'environnement CI et **ignore la sauvegarde git des dépôts privés** parce que l'authentification pour récupérer l'historique git des dépôts privés n'est pas gérée.
 
 **Comportement :**
 - ✅ **Dépôts publics** : Sauvegarde complète (Git + métadonnées)
@@ -58,7 +57,7 @@ Le script détecte automatiquement l'environnement CI et **ignore la sauvegarde 
 ### Configuration S3
 
 1. Créez un bucket S3 chez votre provider
-2. Générez des clés d'API avec les permissions S3
+2. Générez des clés d'API avec les permissions pour pusher sur ce bucket
 3. Notez l'endpoint de votre région (ex: `https://s3.fr-par.scw.cloud` pour Paris sur Scaleway)
 
 ## 🚀 Utilisation
@@ -66,7 +65,7 @@ Le script détecte automatiquement l'environnement CI et **ignore la sauvegarde 
 ### Exécution locale
 
 #### Prérequis
-- Un gestionnaire de versions Ruby (rbenv ou rvm)
+- Un gestionnaire de versions ruby (rbenv ou rvm)
 - Ruby (version définie dans `.ruby-version`)
 
 #### Commandes
@@ -111,7 +110,7 @@ Dans les paramètres de votre dépôt GitHub, ajoutez :
 ## 🔄 Fonctionnalités
 
 - **Backup incrémental** : Évite de re-sauvegarder des données inchangées
-- **Gestion des erreurs** : Continue le processus même si un dépôt échoue
+- **Gestion des erreurs** : Continue le processus même si la sauvegarde d'un dépôt échoue
 - **Notifications** : Rapports de succès/échec via Slack ou autre messagerie si l'url est passé dans la variable d'env `NOTIFICATION_WEBHOOK_URL`
 - **Retry automatique** : Nouvelle tentative en cas d'échec temporaire
 - **Filtrage intelligent** : Ignore automatiquement les dépôts archivés et forkés
@@ -126,11 +125,3 @@ Dans les paramètres de votre dépôt GitHub, ajoutez :
 - `Config` : Configuration et clients API
 - `Utils` : Utilitaires (retry, etc.)
 - `Notifier` : Notifications Slack
-
-## 📝 Logs
-
-Le script affiche des logs détaillés pendant l'exécution :
-- Progression par dépôt
-- Statut des sauvegardes (succès/échec)
-- Raisons des échecs éventuels
-- Dépôts ignorés (déjà sauvegardés)
