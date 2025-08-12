@@ -1,6 +1,5 @@
 source "https://rubygems.org"
 
-gem "clockwork"
 gem "octokit"
 gem "aws-sdk-s3"
 gem "faraday"
