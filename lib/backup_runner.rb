@@ -9,8 +9,8 @@ class BackupRunner
 
   def initialize
     @config = Config.new(
-      github_org: ENV.fetch("GITHUB_ORG"),
-      github_token: ENV.fetch("GITHUB_TOKEN"),
+      github_org: ENV.fetch("GH_ORG_NAME"),
+      github_token: ENV.fetch("GH_TOKEN"),
       s3_access_key: ENV.fetch("S3_ACCESS_KEY"),
       s3_secret_key: ENV.fetch("S3_SECRET_KEY"),
       s3_region: ENV.fetch("S3_REGION"),

@@ -21,10 +21,10 @@ Pour lancer le script en local, créez un fichier `.env` à la racine du projet 
 
 ```bash
 # Organisation GitHub à sauvegarder
-GITHUB_ORG=votre-organisation
+GH_ORG_NAME=votre-organisation
 
 # Token GitHub avec les permissions de lecture sur l'organisation
-GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxx
+GH_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxx
 
 # Credentials S3
 S3_ACCESS_KEY=votre-access-key
@@ -96,12 +96,12 @@ Le projet inclut un workflow GitHub Actions (`daily-backup.yml`) qui s'exécute 
 Dans les paramètres de votre dépôt GitHub, ajoutez :
 
 **Secrets :**
-- `GITHUB_TOKEN` : Token d'accès GitHub
+- `GH_TOKEN` : Token d'accès GitHub
 - `S3_ACCESS_KEY` : Clé d'accès S3
 - `S3_SECRET_KEY` : Clé secrète S3
 
 **Variables :**
-- `GITHUB_ORG` : Nom de l'organisation GitHub
+- `GH_ORG_NAME` : Nom de l'organisation GitHub
 - `S3_BUCKET` : Nom du bucket S3
 - `S3_REGION` : Région S3 (ex: `fr-par`)
 - `S3_ENDPOINT` : Endpoint S3
