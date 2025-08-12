@@ -29,4 +29,5 @@ jobs:
         S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
         S3_REGION: ${{ vars.S3_REGION }}
         S3_ENDPOINT: ${{ vars.S3_ENDPOINT }}
+        NOTIFICATION_WEBHOOK_URL: ${{ secrets.NOTIFICATION_WEBHOOK_URL }}
       run: bundle exec ./bin/backup.rb
