@@ -9,7 +9,7 @@ Ce projet permet de sauvegarder automatiquement :
 - **L'historique git complet** de chaque dépôt (clone mirror compressé en tar.gz)
 - **Les métadonnées GitHub** : issues, pull requests, commentaires d'issues et commentaires de pull requests
 
-Le script parcourt tous les dépôts **non archivés** et **non forkés** de l'organisation spécifiée et sauvegarde leurs données dans un bucket S3 Scaleway.
+Le script parcourt tous les dépôts **non archivés** et **non forkés** de l'organisation spécifiée et sauvegarde leurs données dans un bucket S3.
 
 ⚠️ Attention : pour exécuter le script via la CI, il faut que les repos en question soient public, autrement l'historique git ne pourra pas être récupéré via la CI.
 
@@ -17,7 +17,7 @@ Le script parcourt tous les dépôts **non archivés** et **non forkés** de l'o
 
 ### Variables d'environnement requises
 
-Pour lancer le script en local, créez un fichier `.env` à la racine du projet ou configurez les variables suivantes dans votre environnement :
+Pour lancer le script en local, créez un fichier `.env` à la racine du projet ou configurez les variables suivantes:
 
 ```bash
 # Organisation GitHub à sauvegarder
@@ -57,7 +57,7 @@ Le script détecte automatiquement l'environnement CI et **ignore la sauvegarde 
 ### Configuration S3
 
 1. Créez un bucket S3 chez votre provider
-2. Générez des clés d'API avec les permissions pour pusher sur ce bucket
+2. Générez des clés d'API avec les permissions pour faire des actions sur ce bucket
 3. Notez l'endpoint de votre région (ex: `https://s3.fr-par.scw.cloud` pour Paris sur Scaleway)
 
 ## 🚀 Utilisation
@@ -89,7 +89,7 @@ bin/backup.rb
 
 ### Exécution automatisée via GitHub Actions
 
-Le projet inclut un workflow GitHub Actions (`daily-backup.yml`) qui s'exécute automatiquement tous les jours à 2h00 UTC.
+Le projet inclut un workflow GitHub Actions (`daily-backup.yml`) qui permet de lancer automatiquement le backup tous les jours à 2h00 UTC.
 
 #### Configuration des secrets GitHub
 
@@ -99,6 +99,7 @@ Dans les paramètres de votre dépôt GitHub, ajoutez :
 - `GH_TOKEN` : Token d'accès GitHub
 - `S3_ACCESS_KEY` : Clé d'accès S3
 - `S3_SECRET_KEY` : Clé secrète S3
+- `NOTIFICATION_WEBHOOK_URL` (optionnel): Sert à envoyer les notifications sur un channel Slack ou Mattermost
 
 **Variables :**
 - `GH_ORG_NAME` : Nom de l'organisation GitHub
@@ -113,7 +114,6 @@ Dans les paramètres de votre dépôt GitHub, ajoutez :
 - **Gestion des erreurs** : Continue le processus même si la sauvegarde d'un dépôt échoue
 - **Notifications** : Rapports de succès/échec via Slack ou autre messagerie si l'url est passé dans la variable d'env `NOTIFICATION_WEBHOOK_URL`
 - **Retry automatique** : Nouvelle tentative en cas d'échec temporaire
-- **Filtrage intelligent** : Ignore automatiquement les dépôts archivés et forkés
 
 ## 🛠️ Architecture
 
